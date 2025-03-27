@@ -1,0 +1,70 @@
+{
+    "pass": "123"
+}
+
+{
+  "_id": {
+    "$oid": "67e3e95dba24bebd4dc254ff"
+  },
+  "MADOCGIA": "DOCGIA1",
+  "HOLOT": "DUY HUNG",
+  "TEN": "NGUYEN",
+  "NGAYSINH": "2003/08/09",
+  "PHAI": "NAM",
+  "DIENTHOAI": "0123456778",
+  "Email": "hung@gmail.com",
+  "Password": "$2b$10$Zc4qCCHvObVb9WgTXFlLguUKd/UZ97PI5AWmho9lpF4/DUONx7RO."
+}
+
+{
+  "_id": {
+    "$oid": "67e3e916ba24bebd4dc254fa"
+  },
+  "MANXB": "NXB01",
+  "TENNXB": "NHI DONG",
+  "DIACHI": "HA NOI"
+}
+
+
+{
+  "_id": {
+    "$oid": "67e298c9ba24bebd4dc254f1"
+  },
+  "MSNV": "nv1",
+  "HoTenNV": "Duy khoa",
+  "Email": "khoa@gmail.com",
+  "Password": "$2b$10$Zc4qCCHvObVb9WgTXFlLguUKd/UZ97PI5AWmho9lpF4/DUONx7RO.",
+  "ChucVu": "Quản Lý",
+  "DiaChi": "Can Tho",
+  "SoDienThoai": "01204763957"
+}
+
+{
+  "_id": {
+    "$oid": "67e3d798ba24bebd4dc254f5"
+  },
+  "MSNV": "nv2",
+  "HoTenNV": "Duy khoa",
+  "Email": "khoanv@gmail.com",
+  "Password": "$2b$10$Zc4qCCHvObVb9WgTXFlLguUKd/UZ97PI5AWmho9lpF4/DUONx7RO.",
+  "ChucVu": "Nhân Viên",
+  "DiaChi": "Can Tho",
+  "SoDienThoai": "01204763957"
+}
+
+{
+  "_id": {
+    "$oid": "67e3e856ba24bebd4dc254f7"
+  },
+  "MASACH": "SACH01",
+  "TENSACH": "DE MEN PHIEU LUU KY",
+  "DONGIA": "1000",
+  "SOQUYEN": "5",
+  "NAMXUATBAN": "2020",
+  "MANXB": "NXB01",
+  "NGUONGOC/TACGIA": {
+    "NGUONGOC": "PHAP",
+    "TACGIA": "ABC"
+  }
+}
+
