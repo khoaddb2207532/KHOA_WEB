@@ -9,5 +9,6 @@
                 <b-card title="Thống kê sách mượn nhiều nhất" to="/statistics/top-books"></b-card>
             </b-col>
         </b-row>
+        <router-view></router-view>
     </b-container>
 </template>

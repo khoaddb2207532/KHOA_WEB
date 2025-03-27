@@ -5,17 +5,17 @@ const { verifyToken, authorize } = require("../middlewares/auth.middleware");
 const router = express.Router();
 
 // Các route bảo vệ với phân quyền
-router.post("/", verifyToken, authorize(["Quản lý"]), bookController.create); // Thêm sách (chỉ Quản lý)
+router.post("/", verifyToken, authorize(["Quản Lý"]), bookController.create); // Thêm sách (chỉ Quản lý)
 router.put(
   "/:MASACH",
   verifyToken,
-  authorize(["Quản lý"]),
+  authorize(["Quản Lý"]),
   bookController.update
 ); // Sửa sách (chỉ Quản lý)
 router.delete(
   "/:MASACH",
   verifyToken,
-  authorize(["Quản lý"]),
+  authorize(["Quản Lý"]),
   bookController.delete
 ); // Xóa sách (chỉ Quản lý)
 

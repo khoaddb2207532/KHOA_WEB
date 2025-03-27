@@ -23,6 +23,7 @@ exports.authenticate = (req, res, next) => {
 // Middleware kiểm tra quyền hạn
 exports.authorize = (requiredRoles) => (req, res, next) => {
   const { ChucVu } = req.user;
+  ;
 
   if (!requiredRoles.includes(ChucVu)) {
     return res

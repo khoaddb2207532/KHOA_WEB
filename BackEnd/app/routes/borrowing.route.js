@@ -11,7 +11,7 @@ router.post("/request", verifyToken, borrowingController.createBorrowRequest);
 router.get(
   "/requests/pending",
   verifyToken,
-  authorize(["Nhân viên", "Quản lý"]),
+  authorize(["Nhân Viên", "Quản Lý"]),
   borrowingController.getPendingRequests
 );
 
@@ -19,7 +19,7 @@ router.get(
 router.put(
   "/approve/:MaMuon",
   verifyToken,
-  authorize(["Nhân viên", "Quản lý"]),
+  authorize(["Nhân Viên", "Quản Lý"]),
   borrowingController.approveBorrow
 );
 
@@ -27,7 +27,7 @@ router.put(
 router.put(
   "/return/:MaMuon",
   verifyToken,
-  authorize(["Nhân viên", "Quản lý"]),
+  authorize(["Nhân Viên", "Quản Lý"]),
   borrowingController.returnBook
 );
 

@@ -13,6 +13,7 @@ import AdminBorrowingManagement from "@/views/AdminBorrowingManagement.vue";
 import EmployeeProfile from "@/views/EmployeeProfile.vue";
 import ReaderBorrowings from "@/views/ReaderBorrowings.vue";
 import { useAuthStore } from "@/store/authStore";
+import ReaderProfile from "@/views/ReaderProfile.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
@@ -50,6 +51,7 @@ const routes = [
         path: "borrowing-management",
         name: "AdminBorrowingManagement",
         component: AdminBorrowingManagement,
+        meta: { requiresAuth: true, roles: ["Quản Lý", "Nhân Viên"] }, // Hỗ trợ cả Quản lý và Nhân viên
       },
     ],
   },
@@ -73,6 +75,11 @@ const routes = [
     meta: { requiresAuth: true, role: "reader" },
     children: [
       {
+        path: "profile",
+        name: "ReaderProfile",
+        component: ReaderProfile,
+      },
+      {
         path: "borrowings",
         name: "ReaderBorrowings",
         component: ReaderBorrowings,
@@ -94,7 +101,7 @@ router.beforeEach((to, from, next) => {
     if (!authStore.token) {
       alert("Bạn cần đăng nhập để truy cập trang này.");
       next("/login");
-    } else if (to.meta.role && to.meta.role !== authStore.role) {
+    } else if (to.meta.roles && !to.meta.roles.includes(authStore.role)) {
       alert("Bạn không có quyền truy cập vào trang này.");
       next("/login");
     } else {

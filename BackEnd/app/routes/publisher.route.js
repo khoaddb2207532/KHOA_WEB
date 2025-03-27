@@ -8,21 +8,21 @@ const router = express.Router();
 router.post(
   "/",
   verifyToken,
-  authorize(["Quản lý"]),
+  authorize(["Quản Lý"]),
   publisherController.create
-); // Thêm nhà xuất bản (chỉ Quản lý)
+); // Thêm nhà xuất bản (chỉ Quản Lý)
 router.put(
   "/:MANXB",
   verifyToken,
-  authorize(["Quản lý"]),
+  authorize(["Quản Lý"]),
   publisherController.update
-); // Sửa nhà xuất bản (chỉ Quản lý)
+); // Sửa nhà xuất bản (chỉ Quản Lý)
 router.delete(
   "/:MANXB",
   verifyToken,
-  authorize(["Quản lý"]),
+  authorize(["Quản Lý"]),
   publisherController.delete
-); // Xóa nhà xuất bản (chỉ Quản lý)
+); // Xóa nhà xuất bản (chỉ Quản Lý)
 
 // Các route công khai
 router.get("/", publisherController.findAll); // Lấy danh sách nhà xuất bản
