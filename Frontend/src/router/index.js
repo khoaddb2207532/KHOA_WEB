@@ -1,52 +1,83 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
-import AdminDashboard from "@/views/AdminDashboard.vue";
-import ReaderProfile from "@/views/ReaderProfile.vue";
-import BorrowingPage from "@/views/BorrowingPage.vue";
-import AdminBorrowRequests from "@/views/AdminBorrowRequests.vue";
-import TopBorrowedBooks from "@/views/TopBorrowedBooks.vue";
 import Login from "@/views/Login.vue";
-import EmployeeDashboard from "@/views/EmployeeDashboard.vue"; // Import EmployeeDashboard
+import Register from "@/views/Register.vue";
+import AdminDashboard from "@/views/AdminDashboard.vue";
+import EmployeeDashboard from "@/views/EmployeeDashboard.vue";
+import ReaderDashboard from "@/views/ReaderDashboard.vue";
+import AdminBookManagement from "@/views/AdminBookManagement.vue";
+import AdminPublisherManagement from "@/views/AdminPublisherManagement.vue";
+import AdminEmployeeManagement from "@/views/AdminEmployeeManagement.vue";
+import AdminReaderManagement from "@/views/AdminReaderManagement.vue";
+import AdminBorrowingManagement from "@/views/AdminBorrowingManagement.vue";
+import EmployeeProfile from "@/views/EmployeeProfile.vue";
+import ReaderBorrowings from "@/views/ReaderBorrowings.vue";
 import { useAuthStore } from "@/store/authStore";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
   { path: "/login", name: "Login", component: Login },
+  { path: "/register", name: "Register", component: Register }, // Đăng ký tài khoản
+
+  // Admin routes
   {
     path: "/admin",
     name: "AdminDashboard",
     component: AdminDashboard,
     meta: { requiresAuth: true, role: "Quản Lý" },
+    children: [
+      {
+        path: "book-management",
+        name: "AdminBookManagement",
+        component: AdminBookManagement,
+      },
+      {
+        path: "publisher-management",
+        name: "AdminPublisherManagement",
+        component: AdminPublisherManagement,
+      },
+      {
+        path: "employee-management",
+        name: "AdminEmployeeManagement",
+        component: AdminEmployeeManagement,
+      },
+      {
+        path: "reader-management",
+        name: "AdminReaderManagement",
+        component: AdminReaderManagement,
+      },
+      {
+        path: "borrowing-management",
+        name: "AdminBorrowingManagement",
+        component: AdminBorrowingManagement,
+      },
+    ],
   },
-  {
-    path: "/reader",
-    name: "ReaderProfile",
-    component: ReaderProfile,
-    meta: { requiresAuth: true, role: "" },
-  },
+
+  // Employee routes
   {
     path: "/employee",
     name: "EmployeeDashboard",
     component: EmployeeDashboard,
     meta: { requiresAuth: true, role: "Nhân Viên" },
+    children: [
+      { path: "profile", name: "EmployeeProfile", component: EmployeeProfile }, // Thông tin nhân viên
+    ],
   },
+
+  // Reader routes
   {
-    path: "/borrowings",
-    name: "BorrowingPage",
-    component: BorrowingPage,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/admin/borrow-requests",
-    name: "AdminBorrowRequests",
-    component: AdminBorrowRequests,
-    meta: { requiresAuth: true, role: "Quản Lý" },
-  },
-  {
-    path: "/statistics/top-books",
-    name: "TopBorrowedBooks",
-    component: TopBorrowedBooks,
-    meta: { requiresAuth: true, role: "Quản Lý" },
+    path: "/reader",
+    name: "ReaderDashboard",
+    component: ReaderDashboard,
+    meta: { requiresAuth: true, role: "reader" },
+    children: [
+      {
+        path: "borrowings",
+        name: "ReaderBorrowings",
+        component: ReaderBorrowings,
+      }, // Sách đang mượn
+    ],
   },
 ];
 
@@ -59,24 +90,17 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
 
-  // Kiểm tra nếu route yêu cầu đăng nhập
   if (to.meta.requiresAuth) {
     if (!authStore.token) {
-      // Chưa đăng nhập, chuyển hướng đến trang login
+      alert("Bạn cần đăng nhập để truy cập trang này.");
+      next("/login");
+    } else if (to.meta.role && to.meta.role !== authStore.role) {
+      alert("Bạn không có quyền truy cập vào trang này.");
       next("/login");
     } else {
-      // Đã đăng nhập, kiểm tra role
-      if (to.meta.role && to.meta.role !== authStore.role) {
-        // Role không khớp, chuyển hướng đến trang login
-        alert("Bạn không có quyền truy cập vào trang này!");
-        next("/login");
-      } else {
-        // Role khớp, cho phép truy cập
-        next();
-      }
+      next();
     }
   } else {
-    // Route không yêu cầu đăng nhập, cho phép truy cập
     next();
   }
 });

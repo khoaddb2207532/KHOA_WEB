@@ -21,27 +21,42 @@ const logout = () => {
 
         <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-                <b-nav-item v-if="authStore.role === 'reader'" to="/books">Sách</b-nav-item>
-                <b-nav-item v-if="authStore.role === 'Quản Lý' || authStore.role === 'Nhân Viên'"
-                    to="/book-management">Quản lý Sách</b-nav-item>
-                <b-nav-item v-if="authStore.role === 'Quản Lý' || authStore.role === 'Nhân Viên'"
-                    to="/publisher-management">Quản lý Nhà xuất bản</b-nav-item>
-                <b-nav-item v-if="authStore.role === 'Quản Lý'" to="/employee-management">Quản lý Nhân viên</b-nav-item>
-                <b-nav-item v-if="authStore.role === 'Quản Lý' || authStore.role === 'Nhân Viên'"
-                    to="/reader-management">Quản lý Độc giả</b-nav-item>
-                <b-nav-item v-if="authStore.role === 'Quản Lý' || authStore.role === 'Nhân Viên'"
-                    to="/borrowing-management">Quản lý Mượn sách</b-nav-item>
-                <b-nav-item v-if="authStore.role === 'reader'" to="/reader">Tài khoản</b-nav-item>
-                <b-nav-item v-if="authStore.role === 'reader'" to="/borrowings">Sách đã mượn</b-nav-item>
+                <!-- Menu cho Admin -->
+                <template v-if="authStore.role === 'Quản Lý'">
+                    <b-nav-item to="/admin/book-management">Quản lý Sách</b-nav-item>
+                    <b-nav-item to="/admin/publisher-management">Quản lý Nhà xuất bản</b-nav-item>
+                    <b-nav-item to="/admin/employee-management">Quản lý Nhân viên</b-nav-item>
+                    <b-nav-item to="/admin/reader-management">Quản lý Độc giả</b-nav-item>
+                    <b-nav-item to="/admin/borrowing-management">Quản lý Mượn sách</b-nav-item>
+                </template>
+
+                <!-- Menu cho Nhân viên -->
+                <template v-if="authStore.role === 'Nhân Viên'">
+                    <b-nav-item to="/employee/profile">Thông tin Nhân viên</b-nav-item>
+                    <b-nav-item to="/admin/borrowing-management">Quản lý Mượn sách</b-nav-item>
+                </template>
+
+                <!-- Menu cho Độc giả -->
+                <template v-if="authStore.role === 'reader'">
+                    <b-nav-item to="/reader/borrowings">Sách đang mượn</b-nav-item>
+                    <b-nav-item to="/books">Tìm kiếm Sách</b-nav-item>
+                </template>
+
+                <!-- Menu cho Khách vãng lai -->
+                <template v-if="!authStore.token">
+                    <b-nav-item to="/books">Danh sách Sách</b-nav-item>
+                    <b-nav-item to="/register">Đăng ký</b-nav-item>
+                </template>
             </b-navbar-nav>
 
             <b-navbar-nav class="ml-auto">
+                <!-- Hiển thị thông tin người dùng -->
                 <div v-if="authStore.token" class="d-flex align-items-center">
-                    <!-- Hiển thị tên người dùng hoặc vai trò -->
-                    <b-dropdown  id="user-dropdown" :text="'Hi, ' + authStore.userName" variant="success" right>
+                    <b-dropdown id="user-dropdown" :text="'Hi, ' + authStore.userName" variant="success" right>
                         <b-dropdown-item @click="logout">Đăng xuất</b-dropdown-item>
                     </b-dropdown>
-                </div> <b-nav-item v-else to="/login">Đăng nhập</b-nav-item>
+                </div>
+                <b-nav-item v-else to="/login">Đăng nhập</b-nav-item>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
