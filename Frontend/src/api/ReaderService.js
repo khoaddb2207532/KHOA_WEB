@@ -100,6 +100,7 @@ class ReaderService extends BaseService {
       })
     ).data;
   }
+
 }
 
 export default new ReaderService();

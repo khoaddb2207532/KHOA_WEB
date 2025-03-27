@@ -1,7 +1,6 @@
 const Reader = require("../models/reader.model");
 const BorrowingRecord = require("../models/borrowing.model");
 const bcrypt = require("bcrypt");
-
 class ReaderService {
   // Đăng ký tài khoản độc giả
   async register(payload) {
@@ -86,6 +85,20 @@ class ReaderService {
     );
     return books;
   }
+
+  // Lấy danh sách tất cả độc giả
+  async getAll() {
+    try {
+      // Lấy tất cả độc giả, loại bỏ trường Password để bảo mật
+      const readers = await Reader.find({}, "-Password");
+      return readers;
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách độc giả:", error);
+      throw new Error("Không thể lấy danh sách độc giả.");
+    }
+  }
+
+
   // // Gửi yêu cầu mượn sách
   // async requestBorrowBook(madocgia, masach) {
   //     const book = await Book.findOne({ MASACH: masach });

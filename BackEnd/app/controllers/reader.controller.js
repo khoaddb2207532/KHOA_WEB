@@ -79,3 +79,16 @@ exports.searchBooks = async (req, res, next) => {
     next(error);
   }
 };
+
+// Lấy danh sách độc giả
+exports.getAllReaders = async (req, res, next) => {
+  try {
+    const readerService = new ReaderService();
+    const readers = await readerService.getAll(); // Gọi phương thức từ service
+    res.status(200).json(readers); // Trả về danh sách độc giả
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách độc giả:", error);
+    next(error); // Chuyển lỗi đến middleware xử lý lỗi
+  }
+
+};

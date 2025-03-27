@@ -1,6 +1,6 @@
 const express = require("express");
 const readerController = require("../controllers/reader.controller");
-const { verifyToken } = require("../middlewares/auth.middleware");
+const { verifyToken, authorize } = require("../middlewares/auth.middleware");
 
 const router = express.Router();
 
@@ -22,5 +22,8 @@ router.put("/:MADOCGIA", verifyToken, readerController.updateInfo);
 router.put("/:MADOCGIA/password", verifyToken, readerController.updatePassword);
 // Gửi yêu cầu mượn sách (nếu cần kích hoạt lại)
 // router.post("/borrow/request", verifyToken, readerController.requestBorrowBook);
+
+// Lấy danh sách độc giả (yêu cầu đăng nhập)
+router.get("/", verifyToken, readerController.getAllReaders);
 
 module.exports = router;
