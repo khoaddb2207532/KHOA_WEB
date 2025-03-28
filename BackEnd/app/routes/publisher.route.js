@@ -8,19 +8,19 @@ const router = express.Router();
 router.post(
   "/",
   verifyToken,
-  authorize(["Quản Lý"]),
+  authorize(["Quản Lý", "Nhân Viên"]),
   publisherController.create
 ); // Thêm nhà xuất bản (chỉ Quản Lý)
 router.put(
   "/:MANXB",
   verifyToken,
-  authorize(["Quản Lý"]),
+  authorize(["Quản Lý", "Nhân Viên"]),
   publisherController.update
 ); // Sửa nhà xuất bản (chỉ Quản Lý)
 router.delete(
   "/:MANXB",
   verifyToken,
-  authorize(["Quản Lý"]),
+  authorize(["Quản Lý", "Nhân Viên"]),
   publisherController.delete
 ); // Xóa nhà xuất bản (chỉ Quản Lý)
 
