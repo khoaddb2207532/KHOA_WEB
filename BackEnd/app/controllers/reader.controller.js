@@ -90,5 +90,26 @@ exports.getAllReaders = async (req, res, next) => {
     console.error("Lỗi khi lấy danh sách độc giả:", error);
     next(error); // Chuyển lỗi đến middleware xử lý lỗi
   }
+};
 
+// Xóa độc giả
+exports.deleteReader = async (req, res, next) => {
+  try {
+    const { MADOCGIA } = req.params;
+
+    // Gọi service để xóa độc giả
+    const readerService = new ReaderService();
+    const deletedReader = await readerService.delete(MADOCGIA);
+
+    if (!deletedReader) {
+      return res.status(404).json({ message: "Không tìm thấy độc giả." });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Xóa độc giả thành công!", reader: deletedReader });
+  } catch (error) {
+    console.error("Lỗi khi xóa độc giả:", error);
+    next(error); // Chuyển lỗi đến middleware xử lý lỗi
+  }
 };

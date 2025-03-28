@@ -45,9 +45,6 @@
                     <b-form-input id="Password" v-model="form.Password" type="password" required></b-form-input>
                 </b-form-group>
 
-                <!-- Nút reset mật khẩu khi sửa -->
-                <b-button v-if="isEdit" variant="danger" class="mt-3" @click="resetPassword">Reset Mật khẩu</b-button>
-
                 <b-button type="submit" variant="success" class="mt-3">Lưu</b-button>
             </b-form>
         </b-modal>
@@ -130,14 +127,16 @@ const viewReaderDetails = (reader) => {
 const saveReader = async () => {
     try {
         if (isEdit.value) {
+            // Cập nhật thông tin độc giả
             await ReaderService.updateInfo(form.value.MADOCGIA, form.value);
             alert("Cập nhật độc giả thành công!");
         } else {
-            await ReaderService.create(form.value); // Truyền cả Password khi thêm mới
+            // Thêm mới độc giả (đăng ký tài khoản)
+            await ReaderService.register(form.value); // Gọi API /register
             alert("Thêm độc giả thành công!");
         }
-        fetchReaders();
-        showModal.value = false;
+        fetchReaders(); // Cập nhật danh sách độc giả
+        showModal.value = false; // Đóng modal
     } catch (error) {
         console.error("Lỗi khi lưu độc giả:", error);
         alert("Đã xảy ra lỗi khi lưu độc giả.");

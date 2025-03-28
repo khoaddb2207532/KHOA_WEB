@@ -25,5 +25,6 @@ router.put("/:MADOCGIA/password", verifyToken, readerController.updatePassword);
 
 // Lấy danh sách độc giả (yêu cầu đăng nhập)
 router.get("/", verifyToken, readerController.getAllReaders);
-
+// Xóa độc giả
+router.delete("/:MADOCGIA", readerController.deleteReader);
 module.exports = router;

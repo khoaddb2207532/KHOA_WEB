@@ -98,7 +98,10 @@ class ReaderService {
     }
   }
 
-
+  // Xóa độc giả
+  async delete(MADOCGIA) {
+    return await Reader.findOneAndDelete({ MADOCGIA });
+  }
   // // Gửi yêu cầu mượn sách
   // async requestBorrowBook(madocgia, masach) {
   //     const book = await Book.findOne({ MASACH: masach });
