@@ -13,6 +13,10 @@ class BorrowingService extends BaseService {
     return (await this.api.get(`${this.baseUrl}/requests/pending`)).data;
   }
 
+  async getAllBorrowings() {
+    return (await this.api.get(`${this.baseUrl}/requests`)).data; // Lấy tất cả yêu cầu mượn sách
+  }
+
   async approveBorrow(maMuon) {
     return (await this.api.put(`${this.baseUrl}/approve/${maMuon}`)).data;
   }

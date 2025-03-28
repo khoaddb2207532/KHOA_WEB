@@ -14,9 +14,13 @@ const BorrowingRecordSchema = new mongoose.Schema({
 
 // Middleware tạo `MaMuon` duy nhất
 BorrowingRecordSchema.pre("save", function (next) {
+        console.log("Middleware pre-save được gọi.");
+        console.log("MADOCGIA:", this.MADOCGIA);
+        console.log("MASACH:", this.MASACH);
     if (!this.MaMuon) {
         this.MaMuon = `${this.MADOCGIA}-${this.MASACH}-${Date.now()}`;
     }
+     console.log("MaMuon:", this.MaMuon);
     next();
 });
 

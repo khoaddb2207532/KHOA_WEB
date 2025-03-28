@@ -14,7 +14,7 @@ import EmployeeProfile from "@/views/EmployeeProfile.vue";
 import ReaderBorrowings from "@/views/ReaderBorrowings.vue";
 import { useAuthStore } from "@/store/authStore";
 import ReaderProfile from "@/views/ReaderProfile.vue";
-
+import BorrowingManagement from "@/views/BorrowingManagement.vue";
 const routes = [
   { path: "/", name: "Home", component: Home },
   { path: "/login", name: "Login", component: Login },
@@ -31,11 +31,13 @@ const routes = [
         path: "book-management",
         name: "AdminBookManagement",
         component: AdminBookManagement,
+        meta: { requiresAuth: true, roles: ["Quản Lý", "Nhân Viên"] }, // Thêm quyền cho Nhân Viên
       },
       {
         path: "publisher-management",
         name: "AdminPublisherManagement",
         component: AdminPublisherManagement,
+        meta: { requiresAuth: true, roles: ["Quản Lý", "Nhân Viên"] }, // Thêm quyền cho Nhân Viên
       },
       {
         path: "employee-management",
@@ -50,8 +52,8 @@ const routes = [
       {
         path: "borrowing-management",
         name: "AdminBorrowingManagement",
-        component: AdminBorrowingManagement,
-        meta: { requiresAuth: true, roles: ["Quản Lý", "Nhân Viên"] }, // Hỗ trợ cả Quản lý và Nhân viên
+        component: BorrowingManagement,
+        meta: { requiresAuth: true, roles: ["Quản Lý", "Nhân Viên"] },
       },
     ],
   },

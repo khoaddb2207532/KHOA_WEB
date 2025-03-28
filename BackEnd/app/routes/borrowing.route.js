@@ -31,4 +31,12 @@ router.put(
   borrowingController.returnBook
 );
 
+// Lấy tất cả các yêu cầu mượn sách (bao gồm cả trạng thái "pending" và "approved")
+router.get(
+  "/requests",
+  verifyToken,
+  authorize(["Nhân Viên", "Quản Lý"]),
+  borrowingController.getAllBorrowings
+);
+
 module.exports = router;

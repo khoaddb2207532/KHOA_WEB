@@ -1,18 +1,3 @@
-<script setup>
-import { useAuthStore } from "@/store/authStore";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-
-const authStore = useAuthStore();
-const router = useRouter();
-const showLogout = ref(false); // Trạng thái hiển thị nút Đăng xuất
-
-const logout = () => {
-    authStore.logout();
-    router.push("/login");
-};
-</script>
-
 <template>
     <b-navbar toggleable="lg" type="dark" variant="primary">
         <b-navbar-brand href="/">📚 Quản lý Thư viện</b-navbar-brand>
@@ -32,6 +17,8 @@ const logout = () => {
 
                 <!-- Menu cho Nhân viên -->
                 <template v-if="authStore.role === 'Nhân Viên'">
+                    <b-nav-item to="/admin/book-management">Quản lý Sách</b-nav-item>
+                    <b-nav-item to="/admin/publisher-management">Quản lý Nhà xuất bản</b-nav-item>
                     <b-nav-item to="/admin/borrowing-management">Quản lý Mượn sách</b-nav-item>
                     <b-nav-item to="/books">Tìm kiếm Sách</b-nav-item>
                     <b-nav-item to="/employee/profile">Thông tin Nhân Viên</b-nav-item>
@@ -63,3 +50,18 @@ const logout = () => {
         </b-collapse>
     </b-navbar>
 </template>
+
+<script setup>
+import { useAuthStore } from "@/store/authStore";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+
+const authStore = useAuthStore();
+const router = useRouter();
+const showLogout = ref(false); // Trạng thái hiển thị nút Đăng xuất
+
+const logout = () => {
+    authStore.logout();
+    router.push("/login");
+};
+</script>
