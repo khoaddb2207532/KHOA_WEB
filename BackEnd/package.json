@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon server.js"
   },
-  "author": "Truong Cong Minh",
+  "author": "Dang Duy Khoa",
   "license": "ISC",
   "description": "",
   "dependencies": {
