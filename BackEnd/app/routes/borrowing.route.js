@@ -38,5 +38,11 @@ router.get(
   authorize(["Nhân Viên", "Quản Lý"]),
   borrowingController.getAllBorrowings
 );
+// Lấy danh sách sách mà độc giả đang mượn
+router.get(
+  "/reader",
+  verifyToken, // Xác thực token
+  borrowingController.getReaderBorrowings
+);
 
 module.exports = router;

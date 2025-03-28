@@ -27,13 +27,13 @@
                 <!-- Menu cho Độc giả -->
                 <template v-if="authStore.role === 'reader'">
                     <b-nav-item to="/reader/borrowings">Sách đang mượn</b-nav-item>
-                    <b-nav-item to="/books">Tìm kiếm Sách</b-nav-item>
+
                     <b-nav-item to="/reader/profile">Thông tin Độc giả</b-nav-item>
                 </template>
 
                 <!-- Menu cho Khách vãng lai -->
                 <template v-if="!authStore.token">
-                    <b-nav-item to="/books">Danh sách Sách</b-nav-item>
+                    <b-nav-item to="/">Danh sách Sách</b-nav-item>
                     <b-nav-item to="/register">Đăng ký</b-nav-item>
                 </template>
             </b-navbar-nav>

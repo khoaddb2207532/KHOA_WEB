@@ -23,7 +23,7 @@ const login = async () => {
         } else if (role === "Nhân Viên") {
             router.push("/employee");
         } else if (role === "reader") {
-            router.push("/reader");
+            router.push("/reader/profile");
         } else {
             alert("Không xác định được quyền truy cập!");
         }

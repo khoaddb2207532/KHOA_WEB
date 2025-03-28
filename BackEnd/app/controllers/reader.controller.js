@@ -1,54 +1,15 @@
 const ReaderService = require("../services/reader.service");
 const jwt = require("jsonwebtoken");
 
+// Đăng ký tài khoản độc giả
 exports.register = async (req, res, next) => {
   try {
     const readerService = new ReaderService();
 
-    // Lấy thông tin từ request body
-    const { HOLOT, TEN, NGAYSINH, PHAI, DIACHI, DIENTHOAI, Email, Password } =
-      req.body;
-
-    // Kiểm tra dữ liệu đầu vào
-    if (
-      !HOLOT ||
-      !TEN ||
-      !NGAYSINH ||
-      !PHAI ||
-      !DIACHI ||
-      !DIENTHOAI ||
-      !Email ||
-      !Password
-    ) {
-      return res
-        .status(400)
-        .json({ message: "Vui lòng điền đầy đủ thông tin." });
-    }
-
-    // Tạo mã độc giả tự động
-    const lastReader = await readerService.getLastReader();
-    const newMADOCGIA = lastReader
-      ? `DG${String(parseInt(lastReader.MADOCGIA.slice(2)) + 1).padStart(3, "0")}`
-      : "DG001";
-
-    // Gọi service để thêm độc giả mới
-    const result = await readerService.register({
-      MADOCGIA: newMADOCGIA,
-      HOLOT,
-      TEN,
-      NGAYSINH,
-      PHAI,
-      DIACHI,
-      DIENTHOAI,
-      Email,
-      Password,
-    });
-
-    res
-      .status(201)
-      .json({ message: "Đăng ký tài khoản thành công!", reader: result });
+    // Gọi service để đăng ký độc giả
+    const result = await readerService.register(req.body);
+    res.json(result);
   } catch (error) {
-    console.error("Lỗi khi đăng ký tài khoản:", error);
     next(error);
   }
 };

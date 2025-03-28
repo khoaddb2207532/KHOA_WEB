@@ -24,6 +24,10 @@ class BorrowingService extends BaseService {
   async returnBook(maMuon) {
     return (await this.api.put(`${this.baseUrl}/return/${maMuon}`)).data;
   }
+
+  async getReaderBorrowings() {
+    return (await this.api.get(`${this.baseUrl}/reader`)).data; // Không cần truyền MADOCGIA
+  }
 }
 
 export default new BorrowingService();

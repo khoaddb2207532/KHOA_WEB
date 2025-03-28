@@ -4,17 +4,18 @@ const borrowingService = new BorrowingService();
 // Tạo yêu cầu mượn sách
 exports.createBorrowRequest = async (req, res, next) => {
   try {
-    console.log("Request body:", req.body); 
+    console.log("Request body:", req.body);
     const MADOCGIA = req.user.MADOCGIA; // Lấy MADOCGIA từ token
     const { MASACH } = req.body; // Lấy MASACH từ request body
 
-    const result = await borrowingService.createBorrowRequest({MADOCGIA, MASACH});
-    res
-      .status(201)
-      .json({
-        message: "Yêu cầu mượn sách đã được tạo thành công!",
-        data: result,
-      });
+    const result = await borrowingService.createBorrowRequest({
+      MADOCGIA,
+      MASACH,
+    });
+    res.status(201).json({
+      message: "Yêu cầu mượn sách đã được tạo thành công!",
+      data: result,
+    });
   } catch (error) {
     console.error("Lỗi khi tạo yêu cầu mượn sách:", error);
     next(error);
@@ -64,6 +65,21 @@ exports.getAllBorrowings = async (req, res, next) => {
     res.status(200).json(borrowings);
   } catch (error) {
     console.error("Lỗi khi lấy danh sách yêu cầu mượn sách:", error);
+    next(error);
+  }
+};
+// Lấy danh sách sách mà độc giả đang mượn
+exports.getReaderBorrowings = async (req, res, next) => {
+  try {
+    const { MADOCGIA } = req.user; // Lấy MADOCGIA từ token
+
+    // Gọi service để lấy danh sách sách đang mượn
+    const borrowings = await borrowingService.getReaderBorrowings(MADOCGIA);
+
+    // Trả về danh sách sách đang mượn
+    res.status(200).json(borrowings);
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách sách đang mượn:", error);
     next(error);
   }
 };

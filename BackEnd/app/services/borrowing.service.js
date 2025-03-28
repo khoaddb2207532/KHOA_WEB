@@ -88,6 +88,7 @@ class BorrowingService {
 
   // Trả sách
   async returnBook(MaMuon, MSNV) {
+    // Tìm bản ghi mượn sách với trạng thái "approved"
     const borrowing = await BorrowingRecord.findOne({
       MaMuon,
       TrangThai: "approved",
@@ -99,8 +100,18 @@ class BorrowingService {
     // Cập nhật ngày trả và trạng thái
     borrowing.NGAYTRA = new Date();
     borrowing.TrangThai = "returned";
-    borrowing.MSNV = MSNV;
+    borrowing.MSNV = MSNV; // Ghi nhận nhân viên xử lý trả sách
     await borrowing.save();
+
+    // Tăng số lượng sách (SOQUYEN) lên 1
+    const book = await Book.findOne({ MASACH: borrowing.MASACH });
+    if (!book) {
+      throw new Error(`Không tìm thấy sách với MASACH=${borrowing.MASACH}.`);
+    }
+
+    book.SOQUYEN += 1; // Tăng số lượng sách
+    await book.save();
+
     return borrowing;
   }
 
@@ -109,6 +120,13 @@ class BorrowingService {
     return await BorrowingRecord.find({
       TrangThai: { $in: ["pending", "approved"] },
     });
+  }
+  // Lấy danh sách sách mà độc giả đang mượn
+  async getReaderBorrowings(MADOCGIA) {
+    return await BorrowingRecord.find({
+      MADOCGIA,
+      TrangThai: "approved", // Chỉ lấy sách đang mượn
+    }).populate("MASACH", "TENSACH TACGIA"); // Populate để lấy thông tin sách
   }
 }
 

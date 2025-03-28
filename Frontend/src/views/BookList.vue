@@ -57,14 +57,6 @@ onMounted(fetchBooks);
     <b-container>
         <h2 class="my-4">📚 Danh sách Sách</h2>
 
-        <b-row class="mb-3">
-            <b-col md="8">
-                <b-form-input v-model="searchQuery" placeholder="Tìm kiếm sách..."></b-form-input>
-            </b-col>
-            <b-col md="4">
-                <b-button @click="searchBooks" variant="primary" block>Tìm kiếm</b-button>
-            </b-col>
-        </b-row>
 
         <b-table striped hover :items="books" :fields="[
             { key: 'TENSACH', label: 'Tên sách' },

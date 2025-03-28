@@ -2,8 +2,31 @@ const Reader = require("../models/reader.model");
 const BorrowingRecord = require("../models/borrowing.model");
 const bcrypt = require("bcrypt");
 class ReaderService {
+  // Hàm tạo mã độc giả ngẫu nhiên
+  generateRandomMADOCGIA() {
+    const randomNumber = Math.floor(1000 + Math.random() * 9000); // Tạo số ngẫu nhiên từ 1000 đến 9999
+    return `DG${randomNumber}`;
+  }
+
   // Đăng ký tài khoản độc giả
   async register(payload) {
+    // Nếu MADOCGIA chưa tồn tại, tạo mã độc giả ngẫu nhiên
+    if (!payload.MADOCGIA) {
+      let newMADOCGIA;
+      let isUnique = false;
+
+      // Lặp lại cho đến khi tạo được mã độc giả duy nhất
+      while (!isUnique) {
+        newMADOCGIA = this.generateRandomMADOCGIA();
+        const existingReader = await Reader.findOne({ MADOCGIA: newMADOCGIA });
+        if (!existingReader) {
+          isUnique = true;
+        }
+      }
+
+      payload.MADOCGIA = newMADOCGIA;
+    }
+
     const reader = new Reader(payload);
 
     try {
@@ -22,7 +45,7 @@ class ReaderService {
   async getLastReader() {
     return await Reader.findOne().sort({ MADOCGIA: -1 });
   }
-  
+
   // Xác thực đăng nhập
   async authenticate(email, password) {
     const reader = await Reader.findOne({ Email: email });
@@ -106,30 +129,7 @@ class ReaderService {
   async delete(MADOCGIA) {
     return await Reader.findOneAndDelete({ MADOCGIA });
   }
-  // // Gửi yêu cầu mượn sách
-  // async requestBorrowBook(madocgia, masach) {
-  //     const book = await Book.findOne({ MASACH: masach });
-  //     if (!book) {
-  //         throw new Error(`Sách với MASACH=${masach} không tồn tại.`);
-  //     }
-
-  //     // Tạo yêu cầu mượn sách ở trạng thái "pending"
-  //     const borrowingRecord = new BorrowingRecord({
-  //         MADOCGIA: madocgia,
-  //         MASACH: masach,
-  //         NGAYMUON: new Date(),
-  //         NGAYTRA: null,
-  //         MSNV: null, // Sẽ được gán khi nhân viên xác nhận
-  //         Status: "pending" // Trạng thái chờ xác nhận
-  //     });
-
-  //     try {
-  //         const savedRecord = await borrowingRecord.save();
-  //         return savedRecord; // Trả về bản ghi yêu cầu
-  //     } catch (error) {
-  //         throw new Error("Không thể yêu cầu mượn sách. Có thể bản ghi đã tồn tại.");
-  //     }
-  // }
+  
 }
 
 module.exports = ReaderService;
