@@ -18,7 +18,11 @@ class ReaderService {
       throw error;
     }
   }
-
+  // Lấy độc giả cuối cùng để tạo mã độc giả tự động
+  async getLastReader() {
+    return await Reader.findOne().sort({ MADOCGIA: -1 });
+  }
+  
   // Xác thực đăng nhập
   async authenticate(email, password) {
     const reader = await Reader.findOne({ Email: email });
