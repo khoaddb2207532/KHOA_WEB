@@ -33,6 +33,10 @@
                 <b-form-group label="Số điện thoại" label-for="SoDienThoai">
                     <b-form-input id="SoDienThoai" v-model="form.SoDienThoai" type="tel" required></b-form-input>
                 </b-form-group>
+                <!-- Thêm trường mật khẩu -->
+                <b-form-group label="Mật khẩu" label-for="Password" v-if="!isEdit">
+                    <b-form-input id="Password" v-model="form.Password" type="password" required></b-form-input>
+                </b-form-group>
                 <b-button type="submit" variant="success">Lưu</b-button>
             </b-form>
         </b-modal>
@@ -74,6 +78,7 @@ const form = ref({
     ChucVu: "",
     DiaChi: "",
     SoDienThoai: "",
+    Password: "", // Thêm trường mật khẩu
 });
 const selectedEmployee = ref({}); // Nhân viên được chọn để xem chi tiết
 
@@ -113,7 +118,8 @@ const saveEmployee = async () => {
             await EmployeeService.update(form.value.MSNV, form.value);
             alert("Cập nhật nhân viên thành công!");
         } else {
-            await EmployeeService.create(form.value);
+            const { Password, ...employeeData } = form.value; // Tách mật khẩu ra
+            await EmployeeService.create({ ...employeeData, Password });
             alert("Thêm nhân viên thành công!");
         }
         fetchEmployees();
@@ -147,6 +153,7 @@ const resetForm = () => {
         ChucVu: "",
         DiaChi: "",
         SoDienThoai: "",
+        Password: "", // Thêm trường mật khẩu
     };
 };
 
